@@ -1,0 +1,2 @@
+root = "." # The root directory of this project
+tmp_dir = "tmp" # 
