@@ -23,19 +23,28 @@ func main() {
 		return c.Status(200).JSON(fiber.Map{"msg": "hello world"})
 	})
 
-	app.Post("/api/todos", func(c *fiber.Ctx) error  {
-	 todo := &Todo()
 
-	 if err := c.BodyParser(todo); err := nil {
+	// Create a Todo endpoint
+	app.Post("/api/todos", func(c *fiber.Ctx) error  {
+	 todo := &Todo{}
+
+	 if err := c.BodyParser(todo); err != nil {
 		return err
 	 }
 
 	 if todo.Body == "" {
-		return c.Status(400).JSON(filter.Map("error":"Todo body is required"))
+		return c.Status(400).JSON(fiber.Map{"error": "Todo body is required"})
 	 }
 
-	 todo.ID = len(todos) = 1
-	 todos = append(todos,*todo)
+	 todo.ID = len(todos) + 1
+	 todos = append(todos, *todo)
+
+	 var x int = 5 //0x000001
+	 var p *int = &x //0x00001
+
+	 fmt.Println(p)
+
+	 return c.Status(201).JSON(todo)
 	})
 
 	log.Fatal(app.Listen(":4000"))
