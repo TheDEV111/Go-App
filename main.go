@@ -39,12 +39,21 @@ func main() {
 	 todo.ID = len(todos) + 1
 	 todos = append(todos, *todo)
 
-	 var x int = 5 //0x000001
-	 var p *int = &x //0x00001
-
-	 fmt.Println(p)
+	 
 
 	 return c.Status(201).JSON(todo)
+	})
+
+	//update a Todo
+
+	app.Patch("/api/todos/:id",func(c *fiber.Ctx) error {
+		id := c.Params("id")
+
+		for i, todo := range todos {
+			if fmt.Sprint(todo.ID) == id {
+				todos[i].completed = true
+			}
+		}
 	})
 
 	log.Fatal(app.Listen(":4000"))
